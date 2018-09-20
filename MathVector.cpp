@@ -1,14 +1,15 @@
 #include "MathVector.h"
 
 #include "iostream"
-#include <vector>
 #include <stdlib.h>
+#include <cmath>
+
 using namespace std;
 
 
 // constructors
 MathVector :: MathVector(){
-	values = {0};
+	values = {NAN};
 }
 
 
@@ -18,7 +19,6 @@ MathVector :: MathVector(vector<double> vector){
 	values = vector;
 
 }
-//move constructor
 MathVector :: MathVector(MathVector& mvector){
 	values = mvector.values;
 	
@@ -34,6 +34,31 @@ MathVector :: MathVector (double x, double y, double z){
 	values = {x,y,z};
 
 }
+
+MathVector :: MathVector (string &s){
+	const char* cs;
+	for (auto it = s.begin(); it != s.end();++it){
+                if(!isspace(*it)){
+			cs = &(*it);
+                        values.push_back(atof(cs));
+                }
+
+        }
+
+        
+
+
+
+}
+
+
+
+
+
+
+
+
+
 //destructor
 MathVector::~MathVector (){
 
