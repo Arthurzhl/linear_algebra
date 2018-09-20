@@ -29,9 +29,9 @@ class MathVector {
 
 		MathVector& operator=(const MathVector&);
 		MathVector  operator+(const MathVector&);	
-
+		MathVector  operator-(const MathVector&);
 		void print();
-
+		void printVector(vector<double>&);
 
 };		
 #endif

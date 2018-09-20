@@ -3,6 +3,7 @@
 #include "iostream"
 #include <stdlib.h>
 #include <cmath>
+#include <string>
 
 using namespace std;
 
@@ -37,18 +38,19 @@ MathVector :: MathVector (double x, double y, double z){
 
 MathVector :: MathVector (string &s){
 	const char* cs;
-	for (auto it = s.begin(); it != s.end();++it){
-                if(!isspace(*it)){
-			cs = &(*it);
-                        values.push_back(atof(cs));
-                }
+	string temp;
+	for (auto it = s.begin();it != s.end(); ++it){
+                if(isdigit(*it)){
+			temp += *it;
+                	if(isspace(*(it+1)) || it+1 == s.end()){
+				values.push_back(atof(temp.c_str()));
+				temp = "";
+			}
+
+		}
+						
 
         }
-
-        
-
-
-
 }
 
 
@@ -83,8 +85,6 @@ double MathVector::dot(const MathVector& v2){
 	
 	
 	}
-	cout<<"returning flase"<<endl;
-	return false;	
 }
 
 //get useful vector function for MathVector
@@ -118,7 +118,7 @@ MathVector MathVector::operator+(const MathVector& v){
 	//continue
 	if (values.size() == v.size()){
 		for (int i=0; i<v.size();++i){
-			values[i]-= v.values[i];	
+			values[i]+= v.values[i];	
 		}
 
 		return *this;
@@ -128,16 +128,35 @@ MathVector MathVector::operator+(const MathVector& v){
 	}	
 }
 
+//subtraction
+MathVector MathVector::operator-(const MathVector& v){
+        // checking if v is empty
+        if (v.begin() == v.end()){throw runtime_error("vector can not be empty");}
+        //continue
+        if (values.size() == v.size()){
+                for (int i=0; i<v.size();++i){
+                        values[i]-= v.values[i];
+                }
+
+                return *this;
+        }else{
+                throw runtime_error("two vectors are not same size");
+
+        }
+}
+
+
+
+
+
 
 // print
 
 void MathVector::print(){	
-	double a;
+	
 	if (this->begin() == this->end()){throw runtime_error("vector can not be empty");}
 	for(auto it = values.begin(); it != values.end(); ++it){
-		cout<<*it<<endl;	
-	//	a = atof(*(it->c_str()));
-	//	cout<<"|"<<a<<"|"<<endl;
+		cout<<"|"<<*it<<"|"<<endl;	
 	}
 
 
@@ -145,7 +164,14 @@ void MathVector::print(){
 
 }
 
-
+//for debug, print vector values
+void MathVector::printVector(vector<double>& v){
+	if (v.begin() == v.end()){throw runtime_error("vector can not be empty");}
+	for (auto it = v.begin(); it != v.end(); ++it){
+		cout<<*it<<'\t';
+	}
+	cout<<endl;
+}
 
 
 
