@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MathVector.h"
 
 #include "iostream"
@@ -42,7 +43,7 @@ MathVector :: MathVector (string &s){
 	for (auto it = s.begin();it != s.end(); ++it){
                 if(isdigit(*it)){
 			temp += *it;
-                	if(isspace(*(it+1)) || it+1 == s.end()){
+                	if(it+1 == s.end() || isspace(*(it + 1))){
 				values.push_back(atof(temp.c_str()));
 				temp = "";
 			}
@@ -74,7 +75,7 @@ double MathVector::dot(const MathVector& v2){
 	if (v2.begin() == v2.end()){throw runtime_error("second vector can not be empty");}
 	//continue
 	if (this->size() == v2.size()){
-		double dotp;
+		double dotp = NAN;
 		for (int i=0; i<this->size();++i){
 			dotp += this->values[i]*v2.values[i];	
 		}
@@ -172,25 +173,3 @@ void MathVector::printVector(vector<double>& v){
 	}
 	cout<<endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
