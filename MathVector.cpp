@@ -41,7 +41,7 @@ MathVector :: MathVector (string &s){
 	const char* cs;
 	string temp;
 	for (auto it = s.begin();it != s.end(); ++it){
-                if(isdigit(*it)){
+                if(isdigit(*it) || *it == '.'){
 			temp += *it;
                 	if(it+1 == s.end() || isspace(*(it + 1))){
 				values.push_back(atof(temp.c_str()));
