@@ -1,4 +1,5 @@
-#pragma once
+#ifndef M_MATRIX
+#define M_MATRIX
 #include "MathVector.h"
 #include <vector>
 using namespace std;
@@ -6,7 +7,9 @@ class MathMatrix
 {
 private:
 
-	vector<vector<double>> mvalues;
+	vector<MathVector> mvalues;
+	int mCol;
+	int mRow;
 
 public:
 	MathMatrix();
@@ -17,11 +20,11 @@ public:
 				   double, double);
 
 	MathMatrix addMathVector(MathVector&);
-	void transpose(MathMatrix&);
+	void transpose(const MathMatrix&);
 	double dot(MathMatrix&);
-	MathMatrix crossProduct(MathMatrix&, MathMatrix&);
+	MathMatrix crossProduct(const MathMatrix&, const MathMatrix&);
 	~MathMatrix();
 
 
 };
-
+#endif

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathVector.h"
 
 #include "iostream"
@@ -41,7 +41,7 @@ MathVector :: MathVector (string &s){
 	const char* cs;
 	string temp;
 	for (auto it = s.begin();it != s.end(); ++it){
-                if(isdigit(*it) || *it == '.'){
+                if(isdigit(*it) || *it == '.' || *it == '-'){
 			temp += *it;
                 	if(it+1 == s.end() || isspace(*(it + 1))){
 				values.push_back(atof(temp.c_str()));
@@ -146,10 +146,13 @@ MathVector MathVector::operator-(const MathVector& v){
         }
 }
 
-
-
-
-
+//multplication
+MathVector MathVector::operator*(double scalar){
+	for (auto it = values.begin(); it != values.end(); ++it){
+		*it *= scalar;
+	}
+	return *this;
+}
 
 // print
 

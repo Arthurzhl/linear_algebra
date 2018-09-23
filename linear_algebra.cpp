@@ -1,7 +1,7 @@
 // linear_algebra.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "MathVector.h"
@@ -20,10 +20,10 @@ int main() {
 	v1.print();
 	cout << endl << "v2 = " << endl; 
 	v2.print();
-	v3 = v1 + v2;
-	v3.print();
-	v3 = v1 - v2;
-
+	MathVector v4;
+	v4 = v3*(-10);
+	v4.print();
+	
 	cout << "dot product is " << dp << endl;
 
 

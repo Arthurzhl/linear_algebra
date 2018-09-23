@@ -30,8 +30,10 @@ class MathVector {
 		MathVector& operator=(const MathVector&);
 		MathVector  operator+(const MathVector&);	
 		MathVector  operator-(const MathVector&);
+		MathVector  operator*(double scalar);
 		void print();
 		void printVector(vector<double>&);
+	friend class MathMatrix;
 
 };		
 #endif
