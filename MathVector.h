@@ -14,7 +14,7 @@ class MathVector {
 	public:
 		MathVector();
 		MathVector(vector<double>);
-		MathVector (MathVector&);
+		MathVector (const MathVector&);
 		MathVector (double, double);
 		MathVector (double, double, double);		
 		MathVector (string& s);

@@ -13,16 +13,19 @@ private:
 
 public:
 	MathMatrix();
+	
 	MathMatrix(double, double, double,
 		double, double, double,
 		double, double, double);
 	MathMatrix(double, double,
 				   double, double);
-
+	MathMatrix::MathMatrix(const MathMatrix&);
 	MathMatrix addMathVector(MathVector&);
+	
 	void transpose(const MathMatrix&);
 	double dot(MathMatrix&);
 	MathMatrix crossProduct(const MathMatrix&, const MathMatrix&);
+	
 	~MathMatrix();
 
 

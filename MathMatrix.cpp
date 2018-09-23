@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -7,6 +7,14 @@ MathMatrix::MathMatrix()
 {
 	mCol = sizeof(mvalues);
 	mRow = mvalues[0].size(); 
+}
+
+MathMatrix::MathMatrix(const MathMatrix& x) {
+	for (auto it = x.mvalues.begin(); it != x.mvalues.end(); ++it) {
+		mvalues.push_back(*it);
+	}
+
+
 }
 
 
@@ -42,7 +50,7 @@ MathMatrix::~MathMatrix()
 }
 
 void MathMatrix::transpose(const MathMatrix& x){
-	vector<double> temp;
+		vector<double> temp;
 	auto X_w = x.mvalues.size();
 	auto X_h = x.mvalues[0].size();
 	auto temp_h = X_w;
@@ -50,7 +58,7 @@ void MathMatrix::transpose(const MathMatrix& x){
 	//need to check
 	mvalues.clear();
 	//iterate thru all rows of x
-/*
+
 	for (int rowInX = 0; rowInX < X_h; ++rowInX){// there are h of rows in x
 			
 			
@@ -60,30 +68,33 @@ void MathMatrix::transpose(const MathMatrix& x){
 		}
 		mvalues.push_back(MathVector(temp));
 	}
-*/
+
 }
 
 
 
-MathMatrix MathMatrix:: crossProduct(const MathMatrix& x, const MathMatrix& y){
+MathMatrix MathMatrix::crossProduct(const MathMatrix& x, const MathMatrix& y) {
 	double dot;
-	double scalar;
-	MathMatrix temp;
-/*
-	if (y.mRow == x.mCol && y.mCol == x.mRow){ 
+	double scalar = NAN;
+	MathMatrix tempM;
+	MathVector tempV;
+
+	if (y.mRow == x.mCol && y.mCol == x.mRow) {
 		// there is mcol of vectors in *this
-		for (int i = 0; i < mCol; ++i){  
-				// go thru each row of x to sum scalars for each vectors of m
-			for (int j = 0; j < y.mCol; ++j){ 
+		for (int i = 0; i < mCol; ++i) {
+			// go thru each row of x to sum scalars for each vectors of m
+			for (int j = 0; j < y.mCol; ++j) {
 				scalar += y.mvalues[j].values[i];
 			}
-			x.mvalues[i] = x.mvalues[i]* scalar;		
-			temp.mvalues.push_back(x.mvalues[i]);
+			tempV = x.mvalues[i];
+			tempV = tempV* scalar;
+			tempM.mvalues.push_back(tempV);
+			tempV.values.clear();
 		}
 	}
-	else{
+	else {
 		throw runtime_error("matirx size dont fit");
 	}
-*/
-	return temp;
+
+	return tempM;
 }

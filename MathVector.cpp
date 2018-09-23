@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathVector.h"
 
 #include "iostream"
@@ -21,7 +21,7 @@ MathVector :: MathVector(vector<double> vector){
 	values = vector;
 
 }
-MathVector :: MathVector(MathVector& mvector){
+MathVector :: MathVector(const MathVector& mvector){
 	values = mvector.values;
 	
 
