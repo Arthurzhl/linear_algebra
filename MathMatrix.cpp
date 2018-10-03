@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -22,6 +22,7 @@ MathMatrix::MathMatrix(double x1, double y1, double z1,
 	double x2, double y2, double z2,
 	double x3, double y3, double z3)
 {
+	mRow = mCol = 3;
 	mvalues[0].values.push_back(x1);
 	mvalues[0].values.push_back(x2);
 	mvalues[0].values.push_back(x3);
@@ -37,6 +38,7 @@ MathMatrix::MathMatrix(double x1, double y1, double z1,
 MathMatrix::MathMatrix(double x1, double y1, 
 	double x2, double y2)
 {
+	mRow = mCol = 2;
 	mvalues[0].values.push_back(x1);
 	mvalues[0].values.push_back(x2);
 	mvalues[1].values.push_back(y1);
@@ -72,6 +74,10 @@ void MathMatrix::transpose(const MathMatrix& x){
 }
 
 
+// get col and row
+int MathMatrix::getCol(){ return mCol;}
+int MathMatrix::getRow(){ return mRow;}
+
 
 MathMatrix MathMatrix::crossProduct(const MathMatrix& x, const MathMatrix& y) {
 	double dot;
@@ -97,4 +103,14 @@ MathMatrix MathMatrix::crossProduct(const MathMatrix& x, const MathMatrix& y) {
 	}
 
 	return tempM;
+
 }
+
+
+
+MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
+	mvalues = x.mvalues;
+	mCol = x.mCol;
+	mRow = x.mRow;
+}	
+	 

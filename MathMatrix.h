@@ -19,15 +19,18 @@ public:
 		double, double, double);
 	MathMatrix(double, double,
 				   double, double);
-	MathMatrix::MathMatrix(const MathMatrix&);
+	MathMatrix(const MathMatrix&);
 	MathMatrix addMathVector(MathVector&);
+	~MathMatrix();
 	
 	void transpose(const MathMatrix&);
 	double dot(MathMatrix&);
 	MathMatrix crossProduct(const MathMatrix&, const MathMatrix&);
-	
-	~MathMatrix();
+	int getCol();
+	int getRow();	
 
+	//opeartor
+	MathMatrix& operator= ( const MathMatrix&);
 
 };
 #endif
