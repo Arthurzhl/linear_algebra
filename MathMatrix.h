@@ -25,9 +25,10 @@ public:
 	
 	void transpose(const MathMatrix&);
 	double dot(MathMatrix&);
-	MathMatrix crossProduct(const MathMatrix&, const MathMatrix&);
+	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
 	int getCol();
-	int getRow();	
+	int getRow();
+	
 
 	//opeartor
 	MathMatrix& operator= ( const MathMatrix&);

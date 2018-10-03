@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -18,31 +18,29 @@ MathMatrix::MathMatrix(const MathMatrix& x) {
 }
 
 
-MathMatrix::MathMatrix(double x1, double y1, double z1,
-	double x2, double y2, double z2,
-	double x3, double y3, double z3)
+MathMatrix::MathMatrix(double u1, double v1, double w1,
+	double u2, double v2, double w2,
+	double u3, double v3, double w3)
 {
 	mRow = mCol = 3;
-	mvalues[0].values.push_back(x1);
-	mvalues[0].values.push_back(x2);
-	mvalues[0].values.push_back(x3);
-	mvalues[1].values.push_back(y1);
-	mvalues[1].values.push_back(y2);
-	mvalues[1].values.push_back(y3);
-	mvalues[2].values.push_back(z1);
-	mvalues[2].values.push_back(z2);
-	mvalues[2].values.push_back(z3);
+	MathVector vv1(u1, u2, u3);
+	MathVector vv2(v1, v2, v3);
+	MathVector vv3(w1, w2, w3);
+	
+	mvalues.push_back(vv1);
+	mvalues.push_back(vv2);
+	mvalues.push_back(vv3);
 }
 
 
-MathMatrix::MathMatrix(double x1, double y1, 
-	double x2, double y2)
+MathMatrix::MathMatrix(double u1, double v1, 
+	double u2, double v2)
 {
 	mRow = mCol = 2;
-	mvalues[0].values.push_back(x1);
-	mvalues[0].values.push_back(x2);
-	mvalues[1].values.push_back(y1);
-	mvalues[1].values.push_back(y2);
+	MathVector vv1(u1, u2);
+	MathVector vv2(v1, v2);
+	mvalues.push_back(vv1);
+	mvalues.push_back(vv2);
 }
 
 
@@ -75,11 +73,15 @@ void MathMatrix::transpose(const MathMatrix& x){
 
 
 // get col and row
-int MathMatrix::getCol(){ return mCol;}
-int MathMatrix::getRow(){ return mRow;}
+int MathMatrix::getCol() {
+	return mCol;
+}
+int MathMatrix::getRow() {
+	return mRow;
+}
 
 
-MathMatrix MathMatrix::crossProduct(const MathMatrix& x, const MathMatrix& y) {
+MathMatrix MathMatrix::dotProduct(const MathMatrix& x, const MathMatrix& y) {
 	double dot;
 	double scalar = NAN;
 	MathMatrix tempM;
@@ -112,5 +114,6 @@ MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
 	mvalues = x.mvalues;
 	mCol = x.mCol;
 	mRow = x.mRow;
+	return *this;
 }	
 	 
