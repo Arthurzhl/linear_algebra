@@ -1,7 +1,7 @@
 // linear_algebra.cpp : Defines the entry point for the console application.
 //
 
-//#include "stdafx.h"
+#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "MathVector.h"
@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
 	x2.print();
 	MathMatrix x3;
 	x3 = x1*x2;
+	x3.print();
 	return 0;
 
 

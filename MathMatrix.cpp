@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -15,7 +15,8 @@ MathMatrix::MathMatrix(const MathMatrix& x) {
 	for (auto it = x.mvalues.begin(); it != x.mvalues.end(); ++it) {
 		mvalues.push_back(*it);
 	}
-
+	mRow = mvalues.size();
+	mCol = mvalues[0].size();
 
 }
 
@@ -137,11 +138,12 @@ MathMatrix& MathMatrix::operator* (const MathMatrix& x){
 	}
 
 
-	double scalar = NAN;
+	
 	MathMatrix tempM;
 	MathVector tempV;
 
 	if (mCol == x.mRow) {
+		double scalar = 0;
 		// there is mcol of vectors in *this
 		for (int i = 0; i < mCol; ++i) {
 			// go thru each row of x to sum scalars for each vectors of m
