@@ -23,15 +23,19 @@ public:
 	MathMatrix addMathVector(MathVector&);
 	~MathMatrix();
 	
-	void transpose(const MathMatrix&);
+	void transpose();
 	double dot(MathMatrix&);
 	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
 	int getCol();
 	int getRow();
 	
+	//debug
+	//print
+	void print();
 
 	//opeartor
 	MathMatrix& operator= ( const MathMatrix&);
+	MathMatrix& operator* ( const MathMatrix&);
 
 };
 #endif

@@ -1,12 +1,14 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
+#include <iomanip>
+using namespace std;
 
 MathMatrix::MathMatrix()
 {
-	mCol = sizeof(mvalues);
-	mRow = mvalues[0].size(); 
+	mvalues.clear();
+	
 }
 
 MathMatrix::MathMatrix(const MathMatrix& x) {
@@ -49,24 +51,29 @@ MathMatrix::~MathMatrix()
 {
 }
 
-void MathMatrix::transpose(const MathMatrix& x){
-		vector<double> temp;
-	auto X_w = x.mvalues.size();
-	auto X_h = x.mvalues[0].size();
-	auto temp_h = X_w;
-	auto temp_w = X_h; 
+void MathMatrix::transpose(){
+	if(mvalues.empty() || mvalues[0].values.empty()){
+		throw runtime_error(" matrix empty"); 
+	}
+	vector<double> temp;
+	auto X_w = mvalues.size();
+	auto X_h = mvalues[0].size();
+	auto temp_h = mCol;
+	auto temp_w = mRow; 
+	MathMatrix m(*this);
 	//need to check
 	mvalues.clear();
 	//iterate thru all rows of x
 
-	for (int rowInX = 0; rowInX < X_h; ++rowInX){// there are h of rows in x
+	for (int row = 0; row < X_h; ++row){// there are h of rows in x
 			
 			
 		//for every single column of x, push back element to each row of temp
 		for ( int colInTemp = 0; colInTemp < temp_h; ++colInTemp){
-			temp.push_back(x.mvalues[rowInX].values[colInTemp]);
+			temp.push_back(m.mvalues[colInTemp].values[row]);
 		}
 		mvalues.push_back(MathVector(temp));
+		temp.clear();
 	}
 
 }
@@ -82,7 +89,6 @@ int MathMatrix::getRow() {
 
 
 MathMatrix MathMatrix::dotProduct(const MathMatrix& x, const MathMatrix& y) {
-	double dot;
 	double scalar = NAN;
 	MathMatrix tempM;
 	MathVector tempV;
@@ -110,6 +116,9 @@ MathMatrix MathMatrix::dotProduct(const MathMatrix& x, const MathMatrix& y) {
 
 
 
+
+// opeartor
+
 MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
 	mvalues = x.mvalues;
 	mCol = x.mCol;
@@ -117,3 +126,65 @@ MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
 	return *this;
 }	
 	 
+// multiplication
+MathMatrix& MathMatrix::operator* (const MathMatrix& x){
+	if(mvalues.empty() || mvalues[0].values.empty()){
+		throw runtime_error(" matrix empty"); 
+	}
+
+	if(x.mvalues.empty() || x.mvalues[0].values.empty()){
+		throw runtime_error("x matrix empty"); 
+	}
+
+
+	double scalar = NAN;
+	MathMatrix tempM;
+	MathVector tempV;
+
+	if (mCol == x.mRow) {
+		// there is mcol of vectors in *this
+		for (int i = 0; i < mCol; ++i) {
+			// go thru each row of x to sum scalars for each vectors of m
+			for (int j = 0; j < x.mCol; ++j) {
+				scalar += x.mvalues[j].values[i];
+			}
+			tempV = mvalues[i];
+			tempV = tempV* scalar;
+			tempM.mvalues.push_back(tempV);
+			tempV.values.clear();
+		}
+	}
+	else {
+		throw runtime_error("matirx size dont fit");
+	}
+	*this = tempM;
+
+	return *this;
+}
+
+// print
+
+void MathMatrix::print(){
+	if(mvalues.empty() || mvalues[0].values.empty()){
+		cerr<< "error! matrix empty"<<endl;
+		return; 
+	}
+	// for everysingle column
+	for (auto i = 0; i < mCol; ++i){
+		cout<<"|";
+		// for everysingle row, print
+		for (auto j = 0; j < mRow; j++){
+			cout<<mvalues[j].values[i];
+			if(j == mRow - 1){ break;}
+			else{ cout<<setw(5);}
+		}
+		cout<<"|"<< endl;
+	}
+}
+			
+		
+		
+
+
+
+
