@@ -1,9 +1,11 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>
 using namespace std;
+
+//important!! column first, mvalues[col].values[row]
 
 MathMatrix::MathMatrix()
 {
@@ -19,8 +21,7 @@ MathMatrix::MathMatrix(const MathMatrix& x) {
 	for (auto it = x.mvalues.begin(); it != x.mvalues.end(); ++it) {
 		mvalues.push_back(*it);
 	}
-	mRow = mvalues.size();
-	mCol = mvalues[0].size();
+	this->updateSize();
 
 }
 
@@ -57,6 +58,7 @@ MathMatrix::MathMatrix(int row,int col){
 		MathVector vtemp(v);
 		mvalues.push_back(vtemp);
 	}
+	this->updateSize();
 }
 
 
@@ -69,26 +71,28 @@ void MathMatrix::transpose(){
 		cerr << "error! Matrix is empty" << endl;
 		exit(-1);
 	}
+	//temp is one of the columns of transposed matrix
 	vector<double> temp;
-	auto X_w = mvalues.size();
-	auto X_h = mvalues[0].size();
-	auto temp_h = mCol;
-	auto temp_w = mRow; 
-	MathMatrix m(*this);
-	//need to check
-	mvalues.clear();
-	//iterate thru all rows of x
 
-	for (int row = 0; row < X_h; ++row){// there are h of rows in x
+	//get a copy
+	MathMatrix tempMtx(*this);
+
+	//now clear this for new incomming matrix
+	mvalues.clear();
+	//now get a row from tempMtx and change it to to a MathVector
+	//thats row loop outside column loop
+	for (int i = 0; i < tempMtx.mRow; ++i){// there are h of rows in x
 			
 			
-		//for every single column of x, push back element to each row of temp
-		for ( int colInTemp = 0; colInTemp < temp_h; ++colInTemp){
-			temp.push_back(m.mvalues[colInTemp].values[row]);
+		//now row loop
+		for ( int j = 0; j < tempMtx.mCol; ++j){
+			//get all values in a row, mvalues[col].values[row] 
+			temp.push_back(tempMtx.mvalues[j].values[i]);
 		}
 		mvalues.push_back(MathVector(temp));
 		temp.clear();
 	}
+	this->updateSize();
 
 }
 
@@ -114,8 +118,8 @@ void MathMatrix::updateSize() {
 		cerr << "error! Matrix is empty" << endl;
 		exit(-1);
 	}
-	mRow = mvalues.size();
-	mCol = mvalues[0].size();
+	mRow = mvalues[0].size();
+	mCol = mvalues.size();
 }
 
 
@@ -163,8 +167,8 @@ MathMatrix MathMatrix::multiply(MathMatrix& x,MathMatrix& y){
 		cerr<<"error! either Matrix is empty"<<endl;
 		exit(-1);
 	}
-	const int productCol = x.mCol;
-	const int productRow = y.mRow;
+	const int productCol = x.mRow;
+	const int productRow = y.mCol;
 	MathMatrix product(productCol,productRow);
 	x.transpose();
 	// secondly, go thru all rows
@@ -197,13 +201,15 @@ void MathMatrix::print(){
 		cerr<< "error! matrix empty"<<endl;
 		return; 
 	}
-	// for everysingle column
-	for (auto i = 0; i < mCol; ++i){
+	// need to print by row, thats every column in same row
+	// and go thru all rows
+	// thats mRow outside loop
+	for (auto i = 0; i < mRow; ++i){
 		cout<<"|";
-		// for everysingle row, print
-		for (auto j = 0; j < mRow; j++){
+		// now mCol inside
+		for (auto j = 0; j < mCol; j++){
 			cout<<mvalues[j].values[i];
-			if(j == mRow - 1){ break;}
+			if(j == mCol - 1){ break;}
 			else{ cout<<setw(5);}
 		}
 		cout<<"|"<< endl;
