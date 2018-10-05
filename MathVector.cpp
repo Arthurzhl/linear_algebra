@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathVector.h"
 
 #include "iostream"
@@ -88,7 +88,7 @@ double MathVector::dot(const MathVector& v2){
 	}
 }
 
-bool MathVector::isempty(){
+bool MathVector::isempty() const{
 	if (this->begin() == this->end()){
 		return true;
 	}else{

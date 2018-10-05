@@ -27,9 +27,9 @@ public:
 	~MathMatrix();
 	
 	//add and get
-	int getCol();
-	int getRow();
-	bool isempty();
+	int getCol() const;
+	int getRow() const;
+	bool isempty() const;
 	MathMatrix addMathVector(MathVector&);
 	
 	//debug
@@ -41,7 +41,7 @@ public:
 	//calculation
 	MathMatrix multiply(MathMatrix&, MathMatrix&);
 	void transpose();
-	double dot(MathMatrix&);
+	void updateSize();
 	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
 };
 #endif

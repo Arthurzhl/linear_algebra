@@ -31,7 +31,7 @@ class MathVector {
 		MathVector  operator+(const MathVector&);	
 		MathVector  operator-(const MathVector&);
 		MathVector  operator*(double scalar);
-		bool isempty();
+		bool isempty() const;
 		void print();
 		void printVector(vector<double>&);
 	friend class MathMatrix;

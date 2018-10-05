@@ -1,7 +1,7 @@
 // linear_algebra.cpp : Defines the entry point for the console application.
 //
 
-//#include "stdafx.h"
+#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "MathVector.h"
@@ -30,18 +30,16 @@ int main(int argc, char *argv[]) {
 	cout << "dot product is " << dp << endl;
 
 	cout << " testing Matrices " << endl;
-	MathMatrix x1( 1, 1, 1, 2,2,2,3,3,3);
+	MathMatrix x1( 1,2,3,4 );
 
 	MathMatrix x2(x1);
-	x1.print();
+/*	x1.print();
 	cout<< " x2 =  ";
 	x2.print();
 	MathMatrix result = x1.multiply(x1,x2);	
-	return 0;
+	result.print();
+	*/	return 0;
 
 
 
 }
-
-
-

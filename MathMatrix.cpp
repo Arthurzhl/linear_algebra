@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -12,6 +12,10 @@ MathMatrix::MathMatrix()
 }
 
 MathMatrix::MathMatrix(const MathMatrix& x) {
+	if (x.isempty()) {
+		cerr << "error! either Matrix is empty" << endl;
+		exit(-1);
+	}
 	for (auto it = x.mvalues.begin(); it != x.mvalues.end(); ++it) {
 		mvalues.push_back(*it);
 	}
@@ -62,7 +66,8 @@ MathMatrix::~MathMatrix()
 
 void MathMatrix::transpose(){
 	if(mvalues.empty() || mvalues[0].values.empty()){
-		throw runtime_error(" matrix empty"); 
+		cerr << "error! Matrix is empty" << endl;
+		exit(-1);
 	}
 	vector<double> temp;
 	auto X_w = mvalues.size();
@@ -89,11 +94,21 @@ void MathMatrix::transpose(){
 
 
 // get col and row
-int MathMatrix::getCol() {
+int MathMatrix::getCol() const{
 	return mCol;
 }
-int MathMatrix::getRow() {
+int MathMatrix::getRow() const {
 	return mRow;
+}
+
+//update size
+void MathMatrix::updateSize() {
+	if (mvalues.empty() || mvalues[0].values.empty()) {
+		cerr << "error! Matrix is empty" << endl;
+		exit(-1);
+	}
+	mRow = mvalues.size();
+	mCol = mvalues[0].size();
 }
 
 
@@ -118,7 +133,7 @@ MathMatrix MathMatrix::dotProduct(const MathMatrix& x, const MathMatrix& y) {
 	else {
 		throw runtime_error("matirx size dont fit");
 	}
-
+	tempM.updateSize();
 	return tempM;
 
 }
@@ -139,6 +154,7 @@ MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
 MathMatrix MathMatrix::multiply(MathMatrix& x,MathMatrix& y){
 	if(x.isempty() || y.isempty()){
 		cerr<<"error! either Matrix is empty"<<endl;
+		exit(-1);
 	}
 	const int productCol = x.mCol;
 	const int productRow = y.mRow;
@@ -149,20 +165,22 @@ MathMatrix MathMatrix::multiply(MathMatrix& x,MathMatrix& y){
 	for( int j = 0; j < productCol; ++j){
 		// first go thru all columns
 		for( int i =0; i < productRow;++i){
-			product.mvalues[i].values[j] = x.mvalues[i].dot(y.mvalues[j]);
+			product.mvalues[j].values[i] = x.mvalues[i].dot(y.mvalues[j]);
 		}	
 	}
-	
+	product.updateSize();
+	return product;
 	
 }
 
 //isempty
-bool MathMatrix::isempty(){
+bool MathMatrix::isempty()const {
 	for(auto it = mvalues.begin();it != mvalues.end(); ++it){
 		if(it->isempty()){ 
 			return true;
 		}
 	}
+	if (mvalues.size() == 0) { return true; }
 	return false;
 }
 // print
