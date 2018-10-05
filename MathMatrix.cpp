@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -45,7 +45,15 @@ MathMatrix::MathMatrix(double u1, double v1,
 	mvalues.push_back(vv1);
 	mvalues.push_back(vv2);
 }
-
+//initialize a empty matrix with all 0s
+MathMatrix::MathMatrix(int row,int col){
+	mvalues.clear();
+	for(int i = 0; i< col; ++i){
+		vector<double> v(row,0);
+		MathVector vtemp(v);
+		mvalues.push_back(vtemp);
+	}
+}
 
 
 MathMatrix::~MathMatrix()
@@ -128,42 +136,35 @@ MathMatrix& MathMatrix::operator= ( const MathMatrix& x){
 }	
 	 
 // multiplication
-MathMatrix& MathMatrix::operator* (const MathMatrix& x){
-	if(mvalues.empty() || mvalues[0].values.empty()){
-		throw runtime_error(" matrix empty"); 
+MathMatrix MathMatrix::multiply(MathMatrix& x,MathMatrix& y){
+	if(x.isempty() || y.isempty()){
+		cerr<<"error! either Matrix is empty"<<endl;
 	}
-
-	if(x.mvalues.empty() || x.mvalues[0].values.empty()){
-		throw runtime_error("x matrix empty"); 
+	const int productCol = x.mCol;
+	const int productRow = y.mRow;
+	MathMatrix product(productCol,productRow);
+	x.transpose();
+	// secondly, go thru all rows
+	//product index C(i,j)
+	for( int j = 0; j < productCol; ++j){
+		// first go thru all columns
+		for( int i =0; i < productRow;++i){
+			product.mvalues[i].values[j] = x.mvalues[i].dot(y.mvalues[j]);
+		}	
 	}
-
-
 	
-	MathMatrix tempM;
-	MathVector tempV;
-
-	if (mCol == x.mRow) {
-		double scalar = 0;
-		// there is mcol of vectors in *this
-		for (int i = 0; i < mCol; ++i) {
-			// go thru each row of x to sum scalars for each vectors of m
-			for (int j = 0; j < x.mCol; ++j) {
-				scalar += x.mvalues[j].values[i];
-			}
-			tempV = mvalues[i];
-			tempV = tempV* scalar;
-			tempM.mvalues.push_back(tempV);
-			tempV.values.clear();
-		}
-	}
-	else {
-		throw runtime_error("matirx size dont fit");
-	}
-	*this = tempM;
-
-	return *this;
+	
 }
 
+//isempty
+bool MathMatrix::isempty(){
+	for(auto it = mvalues.begin();it != mvalues.end(); ++it){
+		if(it->isempty()){ 
+			return true;
+		}
+	}
+	return false;
+}
 // print
 
 void MathMatrix::print(){

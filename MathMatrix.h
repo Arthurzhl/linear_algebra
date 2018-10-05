@@ -19,15 +19,18 @@ public:
 		double, double, double);
 	MathMatrix(double, double,
 				   double, double);
+	//constructor that initialize matrix that have n of 0's
+	MathMatrix(int,int);
 	MathMatrix(const MathMatrix&);
-	MathMatrix addMathVector(MathVector&);
+
+	
 	~MathMatrix();
 	
-	void transpose();
-	double dot(MathMatrix&);
-	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
+	//add and get
 	int getCol();
 	int getRow();
+	bool isempty();
+	MathMatrix addMathVector(MathVector&);
 	
 	//debug
 	//print
@@ -35,7 +38,10 @@ public:
 
 	//opeartor
 	MathMatrix& operator= ( const MathMatrix&);
-	MathMatrix& operator* ( const MathMatrix&);
-
+	//calculation
+	MathMatrix multiply(MathMatrix&, MathMatrix&);
+	void transpose();
+	double dot(MathMatrix&);
+	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
 };
 #endif
