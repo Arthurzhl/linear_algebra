@@ -30,7 +30,7 @@ public:
 	int getCol() const;
 	int getRow() const;
 	bool isempty() const;
-	MathMatrix addMathVector(MathVector&);
+	void addMathVector(MathVector&);
 	
 	//debug
 	//print

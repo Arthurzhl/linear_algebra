@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -91,6 +91,13 @@ void MathMatrix::transpose(){
 	}
 
 }
+
+// add a MathVector 
+void MathMatrix::addMathVector(MathVector& v){
+	mvalues.push_back(v);
+	this->updateSize();
+}
+
 
 
 // get col and row
