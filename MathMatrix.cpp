@@ -216,7 +216,9 @@ void MathMatrix::print(){
 	}
 }
 			
-		
+MathMatrix MathMatrix::rowRed(int rowN, int rowN2) {
+
+}
 		
 
 
