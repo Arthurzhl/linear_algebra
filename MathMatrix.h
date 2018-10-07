@@ -31,6 +31,10 @@ public:
 	int getRow() const;
 	bool isempty() const;
 	void addMathVector(MathVector&);
+	bool isSquare() const;
+	// get a identity matrix, size as inputs
+	MathMatrix getIdentity(int, int);
+			
 	
 	//debug
 	//print
@@ -41,6 +45,7 @@ public:
 	//calculation
 	MathMatrix multiply(MathMatrix&, MathMatrix&);
 	void transpose();
+	MathMatrix elim(double , int , int);
 	void updateSize();
 	MathMatrix dotProduct(const MathMatrix&, const MathMatrix&);
 };

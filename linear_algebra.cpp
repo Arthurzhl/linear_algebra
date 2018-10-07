@@ -1,7 +1,7 @@
 // linear_algebra.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "MathVector.h"
@@ -39,7 +39,16 @@ int main(int argc, char *argv[]) {
 	x2.transpose();
 	x2.print();
 	MathMatrix result = x1.multiply(x1,x2);	
+	cout<< "result is = " << endl;
 	result.print();
+	MathMatrix Iden = result.getIdentity(result.getRow(), result.getCol());
+	cout<< "identity is = ="<<endl;
+	Iden.print();
+	result = result.elim(-1,1,2);
+	cout<<"result = " << endl;
+	result.print();	
+
+
 	return 0;
 
 

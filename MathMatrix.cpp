@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "MathMatrix.h"
 #include <stdlib.h>
 #include <iostream>
@@ -184,6 +184,16 @@ MathMatrix MathMatrix::multiply(MathMatrix& x,MathMatrix& y){
 	
 }
 
+//is square
+bool MathMatrix::isSquare() const{
+	if(mRow == mCol) { 
+		return true;
+	}else{
+		return false;
+	}
+}
+	
+
 //isempty
 bool MathMatrix::isempty()const {
 	for(auto it = mvalues.begin();it != mvalues.end(); ++it){
@@ -216,8 +226,34 @@ void MathMatrix::print(){
 	}
 }
 			
-MathMatrix MathMatrix::rowRed(int rowN, int rowN2) {
-
+// this function does get an idendity matrix according to current matrix
+MathMatrix MathMatrix::getIdentity(int row, int col){
+	if (! this->isSquare()){
+		cerr<<" error! input matrix ix not a square matrix"<<endl;
+	}
+	// get 0's
+	MathMatrix Iden = MathMatrix(row,col);
+	for (int i = 0; i < Iden.mRow; ++i){
+		Iden.mvalues[i].values[i] = 1;
+	}
+	return Iden;
+}
+	
+	
+// this function does the row elimination process
+MathMatrix MathMatrix::elim(double multiple, int rowBeingSubtracted, int subtractor){
+	if (!this->isSquare()){
+		cerr<<" error! input matrix ix not a square matrix"<<endl;
+	}
+	if ((rowBeingSubtracted -2) < mRow && (subtractor - 2) < mCol){
+		//elimination matrix, modified from identity matrix, same size as x
+		MathMatrix E = getIdentity(mRow,mCol);	
+		E.mvalues[subtractor -1].values[rowBeingSubtracted - 1] = multiple;
+		return multiply(E,*this);
+	}else{
+		cerr<< "error!  row number exceeds matrix size" << endl;
+		exit(-1);
+	}
 }
 		
 
